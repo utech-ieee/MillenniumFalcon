@@ -1,0 +1,95 @@
+#define sensor A0 // Sharp IR GP2Y0A41SK0F (4-30cm, analog)
+
+// connect motor controller pins to Arduino digital pins
+// motor one
+int enA = 10;
+int in1 = 9;
+int in2 = 8;
+// motor two
+int enB = 6;
+int in3 = 4;
+int in4 = 5;
+
+void setup() {
+Serial.begin(9600); // start the serial port
+  
+ // set all the motor control pins to outputs
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+}
+
+void loop() {
+
+  /*
+  analogWrite(enA,50);
+  analogWrite(enB,50);
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  */
+  IR();
+  forward();
+  delay(100);
+}
+
+void forward() {
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+}
+
+void back(){
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2,HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+}
+
+void left() {
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void right() {
+  analogWrite(enA,255);
+  analogWrite(enB,255);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+}
+
+void Stop () {
+  analogWrite(enA, 0);
+  analogWrite(enB, 0);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void IR(){
+   // 5v
+  float volts = analogRead(sensor)*0.0048828125;  // value from sensor * (5/1024)
+  int distance = 13*pow(volts, -1); // worked out from datasheet graph
+  Serial.println(distance);
+  delay(100); // slow down serial port 
+  
+  if (distance <= 30){
+    Serial.println(distance);   // print the distance
+  }  
+  }
