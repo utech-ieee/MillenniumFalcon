@@ -1,6 +1,7 @@
 #include <SharpIR.h>
+
 #define sensor A0 // Sharp IR GP2Y0A41SK0F (4-30cm, analog)
- 
+
 //Wheel 1 Pins - Right
 const int WHEEL_ONE_PIN_ONE = 4;
 const int WHEEL_ONE_PIN_TWO = 5;
@@ -15,7 +16,6 @@ const int WHEEL_TWO_PWM = 10;
 int WHEEL_SPEED = 140;
  
 int state;
- 
  
 #define ir A0
 #define model 20150
@@ -33,6 +33,26 @@ void setup(){
  
   //Wheel 2
   pinMode(WHEEL_TWO_PIN_ONE, OUTPUT);
+
+
+#define ir A0
+#define model 20150
+
+SharpIR SharpIR(ir, model);
+
+int distance; 
+
+void setup(){
+
+	
+  //Wheel 1 
+  pinMode(WHEEL_ONE_PIN_ONE, OUTPUT); 
+  pinMode(WHEEL_ONE_PIN_TWO, OUTPUT); 
+  pinMode(WHEEL_ONE_PWM, OUTPUT); 
+
+ 
+  //Wheel 2 
+  pinMode(WHEEL_TWO_PIN_ONE, OUTPUT); 
   pinMode(WHEEL_TWO_PIN_TWO, OUTPUT);
   pinMode(WHEEL_TWO_PWM, OUTPUT);
  
@@ -56,6 +76,20 @@ void loop(){
   else{
     Forward(90);
   }
+
+	distance = SharpIR.distance();
+	if (distance < 25)
+	{
+		Stop();
+		delay(2000);
+		Reverse(120);
+		delay(500);
+		Right(100);
+		delay(3000);
+	}
+	else{
+		Forward(140);
+	}
 }
  
 void Reverse(int WHEEL_SPEED)
