@@ -1,7 +1,5 @@
 #include <SharpIR.h>
 
-//Project level constants 
-#define RANGE_SENSOR_PIN  A0
 
 //Wheel 1 Pins - Right
 const int WHEEL_ONE_PIN_ONE = 4; 
@@ -19,13 +17,16 @@ int WHEEL_SPEED = 140;
 int state;
 
 
-SharpIR rangeSensor(RANGE_SENSOR_PIN, 25, 93, 20150);
+#define ir A0
+#define model 20150
+
+SharpIR SharpIR(ir, model);
 
 int distance; 
 
 void setup(){
 
-	pinMode( RANGE_SENSOR_PIN, INPUT);
+	
   //Wheel 1 
   pinMode(WHEEL_ONE_PIN_ONE, OUTPUT); 
   pinMode(WHEEL_ONE_PIN_TWO, OUTPUT); 
@@ -43,11 +44,13 @@ void setup(){
 
 
 void loop(){
-	distance = rangeSensor.distance();
+	distance = SharpIR.distance();
 	if (distance < 25)
 	{
 		Stop();
 		delay(2000);
+		Reverse(120);
+		delay(500);
 		Right(100);
 		delay(3000);
 	}
