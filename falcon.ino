@@ -44,7 +44,7 @@ void setup(){
 
 void loop(){
 	distance = rangeSensor.distance();
-	if (distance < 10)
+	if (distance < 25)
 	{
 		Stop();
 		delay(2000);
