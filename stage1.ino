@@ -1,49 +1,53 @@
-
-
 void setup() {
-  
-  // put your setup code here, to run once:
   //true g's set baud at 19200 :)
   Serial.begin(19200);
   Serial.write("enter r to read component value");
 }
 
 void loop() {
-  delay(2000);
-  if (Serial.available() > 0) {
-    //Serial.write("\n");
+  if (Serial.available() > 0) {  
     Serial.write("\n");
     int sensorvalue = analogRead(A0);
-    //delay(3000);
-    //get command from the console
     char command = Serial.read();
-    if ( command == 'r') {
+    if ( command != 'r') {
+      Serial.write("enter r to read component value");
+      char command = Serial.read();
+    } else {
       determine(sensorvalue);
     }
   }
-  
-  // put your main code here, to run repeatedly
 }
 
-
+  // function to be called when the command r is entered
   int determine (int sensorvalue) {
-  //pre determined values based on input voltages 
+    
+    //pre determined values based on input voltages 
   int wire = 0;
-  int diode_rb = 800;
-  int diode_fb = 15;
-  int capacitor = 650;
-  int inductor = 335;
-  int resistor = 517;
-    
-    Serial.write("reading ");
-    
+  int diode_rb = 850;
+  int diode_fb = 50;
+  int capacitor = 739;
+  int inductor = 300;
+  int resistor = 600;
+  
+  // set component code values
+  const int wire_value = 1;
+  const int resistor_code = 2;
+  const int capacitor_code = 3;
+  const int inductor_code = 4;
+  const int diode_code = 5;
+
+  
+  Serial.write("reading ");
+  delay(1000);
+  
   //diode reverse biased
    if ( sensorvalue > (diode_rb - 10) ) {
     Serial.print("diode reverse biased ");
+ 
    }
 
   //diode biased
-   if ( sensorvalue > (diode_fb - 8) && sensorvalue < (diode_fb + 10)) {
+   if ( sensorvalue > (diode_fb - 20) && sensorvalue < (diode_fb + 20)) {
     Serial.print("diode forward biased ");
    }
   
@@ -53,7 +57,7 @@ void loop() {
    }
   
   //resistor 
-  if ( sensorvalue > (resistor - 80) && sensorvalue < (resistor + 80)) {
+  if ( sensorvalue > (resistor - 50) && sensorvalue < (resistor + 50)) {
     Serial.print("resistor ");
    }
   
