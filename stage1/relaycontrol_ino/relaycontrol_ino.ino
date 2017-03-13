@@ -14,7 +14,7 @@ void loop() {
   for (int i = 0; i<4; i++){
     
     digitalWrite(relay[i], HIGH);
-    delay(1000); 
+    
     digitalWrite(relay[i], LOW);   
     delay(1000);  
     
