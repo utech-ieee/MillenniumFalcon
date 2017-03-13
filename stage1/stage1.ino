@@ -67,53 +67,53 @@ void loop() {
   
    //wire
    if (sensorvalue < (wire + 5)) {
-    Serial.print("wire ");
+    Serial.println("wire ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 1;
    }
   //resistor 
   if ( sensorvalue > (resistor - 50) && sensorvalue < (resistor + 50)) {
-    Serial.print("resistor ");
+    Serial.println("resistor ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 2;
    }
   //capacitor
   if ( sensorvalue > (capacitor - 70) && sensorvalue < (capacitor + 70)) {
-    Serial.print("capacitor ");
+    Serial.println("capacitor ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 3;
    }
    
   //inductor
    if ( sensorvalue > (inductor - 60) && sensorvalue < (inductor + 60)) {
-    Serial.print("inductor ");
+    Serial.println("inductor ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 4;
    }
   
     //diode reverse biased
    if ( sensorvalue > (diode_rb - 10) ) {
-    Serial.print("diode reverse biased ");
+    Serial.println("diode reverse biased ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 5;
    }
 
   //diode biased
    if ( sensorvalue > (diode_fb - 20) && sensorvalue < (diode_fb + 20)) {
-    Serial.print("diode forward biased ");
+    Serial.println("diode forward biased ");
     //Serial.print(sensorvalue);
     //Serial.print(i);
-    Serial.print("\n");
+    //Serial.print("\n");
     return 5;
    }
 
