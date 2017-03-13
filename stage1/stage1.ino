@@ -1,5 +1,6 @@
 // 9/3/17
 int relay[] = {13, 12, 11, 10, 9};
+int code [5];
 void setup() {
   //true g's set baud at 19200 :)
   Serial.begin(19200);
@@ -19,17 +20,24 @@ void loop() {
     
     char command = Serial.read();
     if ( command != 'r') {
+      
       Serial.write("enter r to read component value");
       char command = Serial.read();
+      
     } else {
       for (int i = 0; i<=4; i++){
         
         digitalWrite(relay[i], HIGH);
-        determine(i);
+        code[i] = determine(i);
         digitalWrite(relay[i], LOW);   
         delay(1000);  
         
       }    
+      for (int i = 0; i<=4; i++){
+        
+        Serial.println(code[i]);
+        delay(250);
+      }   
     }
   }
 }
@@ -37,7 +45,7 @@ void loop() {
   // function to be called when the command r is entered
   int determine (int i) {
     
-    //pre determined values based on input voltages 
+  //pre determined values based on input voltages 
   int wire = 0;
   int diode_rb = 850;
   int diode_fb = 50;
@@ -60,21 +68,24 @@ void loop() {
    //wire
    if (sensorvalue < (wire + 5)) {
     Serial.print("wire ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 1;
    }
   //resistor 
   if ( sensorvalue > (resistor - 50) && sensorvalue < (resistor + 50)) {
     Serial.print("resistor ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 2;
    }
   //capacitor
   if ( sensorvalue > (capacitor - 70) && sensorvalue < (capacitor + 70)) {
     Serial.print("capacitor ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 3;
    }
@@ -82,7 +93,8 @@ void loop() {
   //inductor
    if ( sensorvalue > (inductor - 60) && sensorvalue < (inductor + 60)) {
     Serial.print("inductor ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 4;
    }
@@ -90,7 +102,8 @@ void loop() {
     //diode reverse biased
    if ( sensorvalue > (diode_rb - 10) ) {
     Serial.print("diode reverse biased ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 5;
    }
@@ -98,7 +111,8 @@ void loop() {
   //diode biased
    if ( sensorvalue > (diode_fb - 20) && sensorvalue < (diode_fb + 20)) {
     Serial.print("diode forward biased ");
-    Serial.print(sensorvalue);
+    //Serial.print(sensorvalue);
+    //Serial.print(i);
     Serial.print("\n");
     return 5;
    }
