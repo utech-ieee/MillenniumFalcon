@@ -1,16 +1,19 @@
-// 13/3/17
-int relay[] = {13, 12, 11, 10, 9};
+// 29/3/17
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+int relay[] = {6, 7, 8, 9, 10};
 int code [5];
 void setup() {
   //true g's set baud at 19200 :)
   Serial.begin(19200);
   Serial.write("enter r to read component value");
-  
-  pinMode(relay[0], OUTPUT); 
-  pinMode(relay[1], OUTPUT); 
-  pinMode(relay[2], OUTPUT); 
-  pinMode(relay[3], OUTPUT); 
-  pinMode(relay[4], OUTPUT); 
+  lcd.begin(16, 2);
+  lcd.print("Decoded!!!");
+  pinMode(relay[0], OUTPUT); // brown
+  pinMode(relay[1], OUTPUT); //red
+  pinMode(relay[2], OUTPUT); //orange
+  pinMode(relay[3], OUTPUT); //yellow
+  pinMode(relay[4], OUTPUT); //purple
 }
 
 void loop() {
@@ -33,11 +36,7 @@ void loop() {
         delay(1000);  
         
       }    
-      for (int i = 0; i<=4; i++){
-        
-        Serial.println(code[i]);
-        delay(250);
-      }   
+      showCode();
     }
   }
 }
@@ -118,3 +117,11 @@ void loop() {
    }
 
  }
+
+int showCode() {
+  lcd.setCursor(0, 1);
+  for (int d = 0; d < 5; d++) {
+    lcd.print(code[d]);
+    lcd.print(" ");
+  }
+}
